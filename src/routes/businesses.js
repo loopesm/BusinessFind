@@ -1,8 +1,10 @@
 const express = require('express');
-const { findBusinesses } = require('../controllers/businessController');
-
 const router = express.Router();
+const businessController = require('../controllers/businessController');
 
-router.get('/api/businesses', findBusinesses);
+router.get('/', businessController.getBusinesses);
 
 module.exports = router;
+
+
+

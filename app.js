@@ -1,28 +1,25 @@
 const express = require('express');
-const path = require('path');
 const dotenv = require('dotenv');
-const businessesRoutes = require('./src/routes/businesses');
+const path = require('path');
+const businessRoutes = require('./src/routes/businesses');
 
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Middleware para servir arquivos estáticos
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Rotas para buscar empresas
-app.use('/', businessesRoutes);
-
-// Configurando a view engine
+// Configura o EJS como motor de visualização
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
 
-// Rota para a página principal
-app.get('/', (req, res) => {
-  res.render('index');
-});
+// Serve arquivos estáticos
+app.use(express.static(path.join(__dirname, 'public')));
 
-const PORT = process.env.PORT || 3000;
+// Configura as rotas
+app.use('/', businessRoutes);
+
+// Inicia o servidor
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+    console.log(`Servidor rodando na porta ${PORT}`);
+    console.log(`http://localhost:${PORT}`);
 });

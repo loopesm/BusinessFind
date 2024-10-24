@@ -1,42 +1,48 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Business Search</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Business Find</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1>Search for Businesses</h1>
-
-        <form id="searchForm" class="mb-4">
-            <div class="input-group mb-3">
-                <!-- Campo para a cidade -->
-                <input type="text" id="cityInput" class="form-control" placeholder="Enter city name">
-                
-                <!-- Campo para o segmento -->
-                <input type="text" id="segmentInput" class="form-control" placeholder="Enter business type">
+    <div class="container">
+        <h1>Buscador de Empresas</h1>
+        <form method="GET" action="/">
+            <div class="d-flex">
+                <div class="form-group d-block w-50 m-1">
+                    <label for="city"><b>Cidade:</b></label>
+                    <input type="text" class="form-control" name="city" required>
+                </div>
+                <div class="form-group d-block w-50 m-1">
+                    <label for="segment"><b>Segmento:</b></label>
+                    <input type="text" class="form-control" name="segment" required>
+                </div>
             </div>
-
-            <button class="btn btn-primary" type="submit">Search</button>
+            <button type="submit" class="btn btn-primary m-2">Buscar</button>
         </form>
 
-        <div id="results"></div>
-
-        <!-- Botões de paginação -->
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <li class="page-item">
-                    <button id="prevPage" class="btn btn-primary" disabled>Previous</button>
-                </li>
-                <li class="page-item">
-                    <button id="nextPage" class="btn btn-primary" disabled>Next</button>
-                </li>
+        <h2>Resultados:</h2>
+        <% if (businesses.length > 0) { %>
+            <p>Foram encontrados <strong><%= businesses.length %></strong> empresas.</p>
+            <ul class="list-group">
+                <% businesses.forEach((business, index) => { %> <!-- Incluindo o índice -->
+                    <% if (business.name) { %>
+                        <li class="list-group-item">
+                            <strong><%= index + 1 %>. <%= business.name %></strong><br> <!-- Adicionando o índice aqui -->
+                            Endereço: <%= business.address %><br>
+                            Telefone: <%= business.phone %><br>
+                            Website: <a href="<%= business.website %>" target="_blank"><%= business.website %></a><br>
+                            E-mail: <%= business.email %>
+                        </li>
+                    <% } %>
+                <% }); %>
             </ul>
-        </nav>
+        <% } else { %>
+            <p>Nenhum resultado encontrado. Por favor, faça uma busca.</p>
+        <% } %>
     </div>
-
-    <script src="public/js/script.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
