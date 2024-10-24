@@ -23,4 +23,4 @@ COPY . .
 EXPOSE 5050
 
 # Defina o comando padrão para rodar a aplicação
-CMD ["npm", "start"]
+CMD ["node", "app"]
